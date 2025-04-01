@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Alumnos</title>
+    <style>
+         h1{
+        text-align: center;
+        color: rgb(10, 10, 10);
+        font-family:Arial, Helvetica, sans-serif;
+        font-size: 50px;
+       }
+       h2{
+        color: rgb(10, 10, 10);
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 15px;
+        text-align: center;
+       }
+       body{
+        background-color: antiquewhite;
+       }
+       table {
+            background-color: rgba(111, 182, 228, 0.729);
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 2px solid #030303;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: rgba(47, 136, 196, 0.526);
+        }
+        .no-vino {
+            background-color: #e84a4a;
+        }
+        .si-vino {
+            background-color: #65ec43;
+        }
+        button { 
+            padding: 1px 20px;
+            border-radius:50px;
+            border:0;
+            background-color: rgb(254, 254, 254);
+           
+            margin: 0 5px;
+            cursor: pointer; 
+            letter-spacing: 1.5px;
+            font-size: 15px;
+            transition: all .5s;
+        }
+        button:hover{
+            letter-spacing: 3px;
+            background-color: hwb(120 29% 9% / 0.262);
+        }
+        .contadores {
+            text-align: center;
+            margin: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tabla de asistencia</h1>
+    <div id="app">
+        <table>
+            <thead>
+                <tr>
+                    <th><h2>Nombre</h2></th>
+                    <th><h2>No vino</h2></th>
+                    <th><h2>Si vino</h2></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(alumno, index) in alumnos" :key="index" 
+                    :class="{ 'no-vino': alumno.noVino, 'si-vino': alumno.siVino }">
+                    <td>{{ alumno.nombre }}</td>
+                    <td>
+                        <button @click="marcarNoVino(index)">No Vino</button>
+                    </td>
+                    <td>
+                        <button @click="marcarSiVino(index)">Sí Vino</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="contadores">
+            <p>Alumnos que sí vinieron: {{ contarSiVino }}</p>
+            <p>Alumnos que no vinieron: {{ contarNoVino }}</p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    alumnos: [
+                        { nombre: "Juan Pérez", noVino: false, siVino: false },
+                        { nombre: "María Gómez", noVino: false, siVino: false },
+                        { nombre: "Carlos López", noVino: false, siVino: false },
+                        { nombre: "Ana Martínez", noVino: false, siVino: false },
+                        { nombre: "Pedro Sánchez", noVino: false, siVino: false },
+                        { nombre: "Sofía Rodríguez", noVino: false, siVino: false },
+                        { nombre: "Luis Fernández", noVino: false, siVino: false },
+                        { nombre: "Elena García", noVino: false, siVino: false },
+                        { nombre: "Diego Torres", noVino: false, siVino: false },
+                        { nombre: "Laura Ramírez", noVino: false, siVino: false },
+                        { nombre: "Miguel Ángel", noVino: false, siVino: false },
+                        { nombre: "Carmen Ruiz", noVino: false, siVino: false },
+                        { nombre: "Javier Díaz", noVino: false, siVino: false },
+                        { nombre: "Isabel Morales", noVino: false, siVino: false },
+                        { nombre: "Roberto Castro", noVino: false, siVino: false }
+                    ]
+                }
+            },
+            methods: {
+                marcarNoVino(index) {
+                    this.alumnos[index].noVino = true;
+                    this.alumnos[index].siVino = false;
+                },
+                marcarSiVino(index) {
+                    this.alumnos[index].noVino = false;
+                    this.alumnos[index].siVino = true;
+                }
+            },
+            computed: {
+                contarSiVino() {
+                    return this.alumnos.filter(alumno => alumno.siVino).length;
+                },
+                contarNoVino() {
+                    return this.alumnos.filter(alumno => alumno.noVino).length;
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
